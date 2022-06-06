@@ -25,6 +25,7 @@
 </head>
 <body>
     <div id="app">
+        @include('sweetalert::alert')
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm" id="navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/home') }}">

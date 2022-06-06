@@ -230,6 +230,8 @@ class Cart extends Component
             \Cart::session(Auth()->id())->clear();
 
             DB::commit();
+
+            session()->flash('info', 'Pesanan Berhasil Dikirim');
         } catch (\Throwable $th) {
             DB::rollback();
             return session()->flash('error', $th);

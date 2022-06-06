@@ -16,6 +16,7 @@
                             <th width="30%">Total</th>
                             <th>Bayar</th>
                             <th>Status</th>
+                            <th>Note</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -34,11 +35,15 @@
                                 @else
                                     <span class="badge badge-danger">Unpaid</span>
                                 @endif
+                            </td>
+                            <td>{{ $penjualan->note }}</td>
                             <td>
                                 <div>
                                     @if(!$penjualan->paid)
                                     <button wire:click="getInv('{{$penjualan->invoice_number}}')" class="btn btn-primary btn-sm p-1">Payment</button>
                                     <button wire:click="destroy('{{$penjualan->invoice_number}}')" class="btn btn-danger btn-sm p-1">Delete</button>
+                                    @else
+                                    <button wire:click="view('{{$penjualan->invoice_number}}')" class="btn btn-info btn-sm p-1">View</button>
                                     @endif
                                 </div>
                             </td>                                
@@ -52,7 +57,7 @@
     <div class="col-md-5">
         <div class="card">
             <div class="card-header bg-white">
-                <h3 class="font-weight-bold">Payment</h3>                              
+                <h3 class="font-weight-bold">{{ $view ? 'View' : 'Payment'}}</h3>                              
             </div>
             <div class="card-body">
                 @if(session()->has('error'))
@@ -106,20 +111,25 @@
                         </table>
                     </div>
                     <div class="form-group">
+                        <label>Note</label>
+                        <textarea wire:model="note" id="note" class="form-control" {{ $view ? 'disabled' : ''}}></textarea>
+                        @error('note') <small class="text-danger">{{$message}}</small>@enderror
+                    </div>
+                    <div class="form-group">
                         <label>Total</label>
-                        <input wire:model="total" id="total" type="text" class="form-control" readonly></input>
+                        <input wire:model="total" id="total" type="text" class="form-control" readonly>
                         @error('total') <small class="text-danger">{{$message}}</small>@enderror
                     </div>
                     <div class="form-group">
                         <label>Bayar</label>
-                        <input wire:model="bayar" id="bayar" type="number" class="form-control">
+                        <input wire:model="bayar" id="bayar" type="number" class="form-control" {{ $view ? 'disabled' : ''}}>
                         @error('bayar') <small class="text-danger">{{$message}}</small>@enderror
                     </div>
                     <div class="form-group">
                         <label >Kembalian</label>
                         <h1 id="kembalianText" wire:ignore>Rp. 0</h1>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $view ? 'd-none' : '' }}">
                         <div class="row">
                             <div class="col-6">
                                 <button wire:click="cencelEdit()" type="button" class="btn btn-secondary btn-block">Batalkan</button>

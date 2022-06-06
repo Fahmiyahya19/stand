@@ -10,7 +10,7 @@ use App\Models\Transaction;
 class Penjualan extends Component
 {
 
-    public $invoice_number,$total,$products,$bayar,$paid,$cencel,$search,$note;
+    public $invoice_number,$total,$products,$bayar,$paid,$cencel,$search,$note, $view = false;
 
     public function search(){
         $this->resetPage();
@@ -52,6 +52,14 @@ class Penjualan extends Component
         $this->products = $model->products;
         $this->bayar = $model->pay;
         $this->total = $model->total;
+        if($this->view){
+            $this->view = false;
+        }
+    }
+
+    public function view($invoice_number){
+        $this->getInv($invoice_number);
+        $this->view = true;
     }
 
     public function cencelEdit(){

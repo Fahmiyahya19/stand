@@ -112,18 +112,41 @@
                     </div>      
                 </div> --}}
                 <input type="hidden" id="total" value="{{$summary['total']}}">
-
+                <div class="mt-4">
+                    <button data-toggle="modal" data-target="#modal-confirm" id="saveButton" class="btn btn-success btn-block font-weight-bold" id="saveButton">Pesan</button>
+                </div>
                 <form wire:submit.prevent="handleSubmit">
-                    <div class="mt-4">
-                        <button type="submit" id="saveButton" class="btn btn-success btn-block font-weight-bold" id="saveButton">Pesan</button>
-                    </div>
+                    <button type="submit" class="d-none" id="confirmButton"></button>
                 </form>
+                <div wire:ignore.self class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Pesanan</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true close-btn">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Anda yakin memesan total nilai Rp. <span id="valueAlert">{{$summary['total']}}</span>?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Batalkan</button>
+                                <button type="button" onclick="submit()" class="btn btn-success close-modal" data-dismiss="modal">Ya</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <script>
     document.getElementById('navbar').classList.add('d-none');
+    function submit(){
+        document.getElementById('confirmButton').click();
+    }
 </script>
 

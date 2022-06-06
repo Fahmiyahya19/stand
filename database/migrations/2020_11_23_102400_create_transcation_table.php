@@ -20,7 +20,7 @@ class CreateTranscationTable extends Migration
             $table->tinyInteger('cancel');
             $table->integer('pay');
             $table->integer('total');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

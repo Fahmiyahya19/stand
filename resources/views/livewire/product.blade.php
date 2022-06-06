@@ -151,38 +151,3 @@
         </div>
     </div>
 </div>
-@push('script-custom')
-<script>
-    document.addEventListener('livewire:load', function () {
-        @this.on('destroy', idProduct => {
-            Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true
-            }).then((result) => {
-                //if user clicks on delete
-                if (result.value) {
-                    // calling destroy method to delete
-                    @this.call('destroy',idProduct)
-
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire(
-                        'Cancelled',
-                        'File Tidak Jadi Dihapus :)',
-                        'error'
-                    )
-                }
-            });
-        })
-    })
-</script>
-@endpush

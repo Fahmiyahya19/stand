@@ -23,7 +23,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">Total Transaksi Hari Ini</div>
-                                <div class="card-body">Rp. {{$totalTransaksiNow}}</div>
+                                <div class="card-body">Rp. {{$totalTransaksiNow > 0 ? $totalTransaksiNow : 0}}</div>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">Total Transaksi Bulan Ini</div>
-                                <div class="card-body">Rp. {{$totalTransaksiMonth}}</div>
+                                <div class="card-body">Rp. {{$totalTransaksiMonth > 0 ? $totalTransaksiMonth : 0}}</div>
                             </div>
                         </div>
                     </div>

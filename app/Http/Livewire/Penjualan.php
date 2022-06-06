@@ -10,7 +10,7 @@ use App\Models\Transaction;
 class Penjualan extends Component
 {
 
-    public $invoice_number,$total,$products,$bayar,$paid,$cencel,$search;
+    public $invoice_number,$total,$products,$bayar,$paid,$cencel,$search,$note;
 
     public function search(){
         $this->resetPage();
@@ -36,6 +36,7 @@ class Penjualan extends Component
         $model = Transaction::findOrFail($this->invoice_number);
         $model->update([
             'paid' => 1,
+            'note' => $this->note,
             'pay' => $this->bayar
         ]);
 
@@ -80,6 +81,7 @@ class Penjualan extends Component
     private function deleteInput(){
         $this->invoice_number =  '';
         $this->products = '';
+        $this->note = '';
         $this->bayar = '';
         $this->total = '';
     }

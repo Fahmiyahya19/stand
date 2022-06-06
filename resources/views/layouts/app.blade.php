@@ -28,7 +28,7 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm" id="navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    RPL
+                    <img src="{{asset('storage/images/rplLogo.png')}}" width="50px" alt="">
                 </a>
                 @auth
                 <a class="navbar-brand" href="{{ url('/home') }}">

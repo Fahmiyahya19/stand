@@ -16,7 +16,7 @@ class Product extends Component
     protected $rules = [
         'name' => 'required',
         'image' => '',
-        'description' => 'required',
+        'description' => 'string',
         'stock' => 'required',
         'price' => 'required',            
     ];
@@ -36,7 +36,7 @@ class Product extends Component
     }
 
     public function store(){
-        $this->rules['image'] = 'image|max:2048|required';
+        $this->rules['image'] = 'image|max:4096|required';
         $this->validate();
 
         $imageName = md5($this->image.microtime()).'.'.$this->image->extension();
@@ -74,7 +74,7 @@ class Product extends Component
 
     public function update(){
         if(!Storage::exists('public/images/'.$this->image)){
-            $this->rules['image'] = 'image|max:2048';
+            $this->rules['image'] = 'image|max:4096';
         }
         $this->validate();
         $model = ProductModel::findOrFail($this->idProduct);

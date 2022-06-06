@@ -18,11 +18,14 @@
                                     <h6 class="text-center font-weight-bold" style="color:grey">Rp {{number_format($product->price,2,',','.')}}</h6>
                                     @php $arr = explode(',', $product->description); @endphp
                                     @if(isset($arr[1]))
+                                    <p class="card-text">{{$arr[0]}}</p>
                                     <ul class="pl-4">
-                                        @foreach ($arr as $item)
-                                        <li>
-                                            {{$item}}
-                                        </li>
+                                        @foreach ($arr as $index => $item)
+                                            @if($index != 0)
+                                            <li>
+                                                {{$item}}
+                                            </li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                     @else

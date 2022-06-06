@@ -11,11 +11,19 @@ class Product extends Component
 {
     use WithFileUploads;
 
-    public $name,$image,$description,$qty,$price;
+    public $idProduct,$name,$image,$description,$stock,$price,$updateProduct = false;
+    
+    protected $rules = [
+        'name' => 'required',
+        'image' => '',
+        'description' => 'required',
+        'stock' => 'required',
+        'price' => 'required',            
+    ];
 
     public function render()
     {
-        $products = ProductModel::orderBy('created_at', 'DESC')->get();
+        $products = ProductModel::active()->orderBy('created_at', 'DESC')->get();
         return view('livewire.product', [
             'products' => $products
         ]);
@@ -28,13 +36,8 @@ class Product extends Component
     }
 
     public function store(){
-        $this->validate([
-            'name' => 'required',
-            'image' => 'image|max:2048|required',
-            'description' => 'required',
-            'qty' => 'required',
-            'price' => 'required',            
-        ]);
+        $this->rules['image'] = 'image|max:2048|required';
+        $this->validate();
 
         $imageName = md5($this->image.microtime()).'.'.$this->image->extension();
 
@@ -48,16 +51,70 @@ class Product extends Component
             'name' => $this->name,
             'image' => $imageName,
             'description' => $this->description,
-            'qty' => $this->qty,
+            'qty' => $this->stock,
             'price' => $this->price 
         ]);
 
         session()->flash('info', 'Product Created Successfully');
 
+        $this->deleteInput();
+    }
+
+    public function getProduct($product)
+    {
+        $this->updateProduct = true;
+        $model = ProductModel::findOrFail($product);
+        $this->idProduct = $model->id;
+        $this->name = $model->name;
+        $this->image = $model->image;
+        $this->description = $model->description;
+        $this->stock = $model->qty;
+        $this->price = $model->price;
+    }
+
+    public function update(){
+        if(!Storage::exists('public/images/'.$this->image)){
+            $this->rules['image'] = 'image|max:2048';
+        }
+        $this->validate();
+        $model = ProductModel::findOrFail($this->idProduct);
+        if($model->image != $this->image){ 
+            if(Storage::exists('public/images/'.$this->image)){Storage::delete('public/images/'.$this->image);}
+            $imageName = md5($this->image.microtime()).'.'.$this->image->extension();
+            Storage::putFileAs(
+                'public/images',
+                $this->image,
+                $imageName
+            );
+        }
+
+        $model->update([
+            'name' => $this->name,
+            'image' => $imageName ?? $model->image,
+            'description' => $this->description,
+            'qty' => $this->stock,
+            'price' => $this->price 
+        ]);
+        session()->flash('info', 'Product Updated Successfully');
+        $this->updateProduct = false;
+        $this->deleteInput();
+    }
+
+    public function cencelEdit(){
+        $this->updateProduct = false;
+        $this->deleteInput();
+    }
+
+    public function destroy($idProduct){
+        ProductModel::findOrFail(($idProduct))->update(['deleted' => 1]);
+        session()->flash('info', 'Product Deleted Successfully');
+    }
+
+    private function deleteInput(){
         $this->name = '';
         $this->image = '';
         $this->description = '';
-        $this->qty = '';
+        $this->stock = '';
         $this->price = '';
     }
 }

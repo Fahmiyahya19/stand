@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Transaction extends Model
 {
@@ -13,14 +14,22 @@ class Transaction extends Model
     public $incrementing = false;
     protected $keyType = 'string';
     protected $guarded = [];
+    protected $attributes = [
+        'paid' => 0,
+        'cancel' => 0
+    ];
 
-    protected $table = 'transcations';
+    protected $table = 'transactions';
 
-    public function product(){
+    public function products(){
         return $this->hasMany(ProductTransaction::class, 'invoice_number', 'invoice_number' );
     }
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeToday($query){
+        $query->where(DB::raw('LEFT(created_at, 10)'), date('Y-m-d'));
     }
 }

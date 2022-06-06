@@ -13,9 +13,11 @@ class CreateTranscationTable extends Migration
      */
     public function up()
     {
-        Schema::create('transcations', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->string('invoice_number');
             $table->bigInteger('user_id')->unsigned();
+            $table->tinyInteger('paid');
+            $table->tinyInteger('cancel');
             $table->integer('pay');
             $table->integer('total');
             $table->timestamps();
@@ -29,6 +31,6 @@ class CreateTranscationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transcations');
+        Schema::dropIfExists('transactions');
     }
 }

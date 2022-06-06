@@ -25,15 +25,14 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm" id="navbar">
             <div class="container-fluid">
-                
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    TAHU CODING
+                    RPL
                 </a>
                 @auth
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    Home
+                   Home
                 </a>
                 <a class="navbar-brand" href="{{ url('/products') }}">
                    Products 
@@ -41,6 +40,9 @@
                 <a class="navbar-brand" href="{{ url('/cart') }}">
                    POS 
                 </a>
+                <a class="navbar-brand" href="{{ url('/penjualan') }}">
+                   Transactions
+                 </a>
                 @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -90,6 +92,22 @@
 
     @livewireScripts   
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script>
+    <script>
+        const rupiah = (angka) => {
+            const numberString = angka.toString()
+            const split = numberString.split(',')
+            const sisa = split[0].length % 3
+            let rupiah = split[0].substr(0, sisa)
+            const ribuan = split[0].substr(sisa).match(/\d{1,3}/gi)
+
+            if(ribuan){
+                const separator = sisa ? '.' : ''
+                rupiah += separator + ribuan.join('.')
+            }
+
+            return split[1] != undefined ? rupiah + ',' + split[1] : rupiah
+        }
+    </script>
     @stack('script-custom')
 </body>
 </html>

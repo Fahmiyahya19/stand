@@ -30,6 +30,10 @@ class Transaction extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function scopePaid($query){
+        $query->where('paid', 1);
+    }
+
     public function scopeMonth($query){
         $query->where(DB::raw('LEFT(created_at, 7)'), date('Y-m'));
     }

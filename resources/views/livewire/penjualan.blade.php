@@ -44,6 +44,7 @@
                                     <button wire:click="destroy('{{$penjualan->invoice_number}}')" class="btn btn-danger btn-sm p-1">Delete</button>
                                     @else
                                     <button wire:click="view('{{$penjualan->invoice_number}}')" class="btn btn-info btn-sm p-1">View</button>
+                                    <button wire:click="nota('{{$penjualan->invoice_number}}')" class="btn btn-primary btn-sm p-1">Nota</button>
                                     @endif
                                 </div>
                             </td>                                
@@ -74,6 +75,11 @@
                         <label>Invoice Number</label>
                         <input wire:model="invoice_number" type="text" class="form-control" readonly>
                         @error('invoice_number') <small class="text-danger">{{$message}}</small>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label>Pelanggan</label>
+                        <input wire:model="pelanggan" type="text" class="form-control">
+                        @error('pelanggan') <small class="text-danger">{{$message}}</small>@enderror
                     </div>
                     <div>
                         <table class="table table-sm table-bordered table-hovered">

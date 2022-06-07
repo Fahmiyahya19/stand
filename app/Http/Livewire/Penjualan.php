@@ -6,11 +6,12 @@ use App\Models\Product;
 use App\Models\ProductTransaction;
 use Livewire\Component;
 use App\Models\Transaction;
+use PDF;
 
 class Penjualan extends Component
 {
 
-    public $invoice_number,$total,$products,$bayar,$paid,$cencel,$search,$note, $view = false;
+    public $invoice_number,$total,$products,$bayar,$paid,$cencel,$search,$note, $pelanggan, $view = false;
 
     public function search(){
         $this->resetPage();
@@ -28,13 +29,15 @@ class Penjualan extends Component
 
     public function update(){
         $this->validate([
-            'bayar' => 'required|gte:'.$this->total
+            'bayar' => 'required|gte:'.$this->total,
+            'pelanggan' => 'required'
         ],[
             'gte' => 'Pembayaran Harus Sama atau Lebih Dari :value'
         ]);
 
         $model = Transaction::findOrFail($this->invoice_number);
         $model->update([
+            'pelanggan' => $this->pelanggan,
             'paid' => 1,
             'note' => $this->note,
             'pay' => $this->bayar
@@ -53,9 +56,16 @@ class Penjualan extends Component
         $this->note = $model->note;
         $this->bayar = $model->pay;
         $this->total = $model->total;
+        $this->pelanggan = $model->pelanggan;
         if($this->view){
             $this->view = false;
         }
+    }
+
+    public function nota($invoice_number){
+        $model = Transaction::with(['products.product'])->findOrFail($invoice_number);
+        $invoice = PDF::loadView('layouts.nota' , $model);
+        return $invoice->stream('nota.pdf');
     }
 
     public function view($invoice_number){
@@ -93,5 +103,6 @@ class Penjualan extends Component
         $this->note = '';
         $this->bayar = '';
         $this->total = '';
+        $this->pelanggan = '';
     }
 }

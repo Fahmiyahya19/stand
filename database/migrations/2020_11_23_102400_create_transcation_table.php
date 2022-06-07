@@ -16,6 +16,7 @@ class CreateTranscationTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->string('invoice_number');
             $table->bigInteger('user_id')->unsigned();
+            $table->string('pelanggan');
             $table->tinyInteger('paid');
             $table->tinyInteger('cancel');
             $table->integer('pay');

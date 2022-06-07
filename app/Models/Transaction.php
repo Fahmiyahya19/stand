@@ -17,7 +17,8 @@ class Transaction extends Model
     protected $attributes = [
         'paid' => 0,
         'cancel' => 0,
-        'note' => ''
+        'note' => '',
+        'pelanggan' => ''
     ];
 
     protected $table = 'transactions';

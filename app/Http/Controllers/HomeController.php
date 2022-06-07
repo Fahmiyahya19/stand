@@ -25,14 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $totalTransaksiNow = Transaction::paid()->today()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
-        $jumlahTransaksiNow = Transaction::paid()->today()->count();
-        $totalTransaksiNow = Transaction::paid()->today()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
-        $jumlahTransaksiNow = Transaction::paid()->today()->count();
-        $totalTransaksiMonth = Transaction::paid()->month()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
-        $jumlahTransaksiMonth = Transaction::paid()->month()->count();
-        $totalTransaksiMonth = Transaction::paid()->month()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
-        $jumlahTransaksiMonth = Transaction::paid()->month()->count();
+        $transactions = Transaction::paid();
+        $totalTransaksiNow = $transactions->today()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
+        $jumlahTransaksiNow = $transactions->today()->count();
+        $totalTransaksiNow = $transactions->today()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
+        $jumlahTransaksiNow = $transactions->today()->count();
+        $totalTransaksiMonth = $transactions->month()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
+        $jumlahTransaksiMonth = $transactions->month()->count();
+        $totalTransaksiMonth = $transactions->month()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
+        $jumlahTransaksiMonth = $transactions->month()->count();
         return view('home', compact('totalTransaksiNow', 'jumlahTransaksiNow', 'totalTransaksiMonth', 'jumlahTransaksiMonth'));
     }
 }

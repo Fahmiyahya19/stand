@@ -50,6 +50,7 @@ class Penjualan extends Component
         $model = Transaction::with(['products.product'])->findOrFail($invoice_number);
         $this->invoice_number =  $model->invoice_number;
         $this->products = $model->products;
+        $this->note = $model->note;
         $this->bayar = $model->pay;
         $this->total = $model->total;
         if($this->view){

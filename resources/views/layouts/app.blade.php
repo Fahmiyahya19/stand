@@ -18,7 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
 
 
      @livewireStyles
@@ -92,7 +92,7 @@
     </div>
 
     @livewireScripts   
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script>
+    <script src="{{ asset('js/livewire-turbolinks.js') }}" data-turbolinks-eval="false"></script>
     <script>
         const rupiah = (angka) => {
             const numberString = angka.toString()

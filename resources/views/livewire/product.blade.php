@@ -28,7 +28,7 @@
                                 <td>
                                     <div>
                                         <button wire:click="getProduct({{$product->id}})" class="btn btn-warning btn-sm">Edit</button>
-                                        <button wire:click="destroy({{$product->id}})" class="btn btn-danger btn-sm">Delete</button>
+                                        <!-- <button wire:click="destroy({{$product->id}})" class="btn btn-danger btn-sm">Delete</button> -->
                                     </div>
                                 </td>                                
                             </tr>

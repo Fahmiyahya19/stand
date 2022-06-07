@@ -29,10 +29,10 @@ class HomeController extends Controller
         $jumlahTransaksiNow = Transaction::today()->count();
         $totalTransaksiNow = Transaction::today()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
         $jumlahTransaksiNow = Transaction::today()->count();
-        $totalTransaksiMonth = Transaction::today()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
-        $jumlahTransaksiMonth = Transaction::today()->count();
-        $totalTransaksiMonth = Transaction::today()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
-        $jumlahTransaksiMonth = Transaction::today()->count();
+        $totalTransaksiMonth = Transaction::month()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
+        $jumlahTransaksiMonth = Transaction::month()->count();
+        $totalTransaksiMonth = Transaction::month()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
+        $jumlahTransaksiMonth = Transaction::month()->count();
         return view('home', compact('totalTransaksiNow', 'jumlahTransaksiNow', 'totalTransaksiMonth', 'jumlahTransaksiMonth'));
     }
 }

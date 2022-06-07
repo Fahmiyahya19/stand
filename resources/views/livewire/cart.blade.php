@@ -128,7 +128,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Anda yakin memesan total nilai Rp. <span id="valueAlert">{{$summary['total']}}</span>?</p>
+                                <p>Anda yakin memesan total nilai Rp. <span id="valueAlert">{{ number_format($summary['total'],2,',','.') }}</span>?</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Batalkan</button>

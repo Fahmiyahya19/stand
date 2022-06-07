@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/cart', Cart::class);
     Route::get('/penjualan', Penjualan::class);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/cetak/{invoice?}', [HomeController::class, 'cetakNota'])->name('cetak');
     Route::get('/logout', Logout::class)->name('logout');
 
 });

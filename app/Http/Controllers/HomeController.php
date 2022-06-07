@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
@@ -35,5 +37,10 @@ class HomeController extends Controller
         $totalTransaksiMonth = $transactions->month()->select(DB::raw('SUM(total) AS totals'))->first()->totals;
         $jumlahTransaksiMonth = $transactions->month()->count();
         return view('home', compact('totalTransaksiNow', 'jumlahTransaksiNow', 'totalTransaksiMonth', 'jumlahTransaksiMonth'));
+    }
+
+    public function cetakNota($invoice){
+        $model = Transaction::with(['products.product'])->paid()->findOrFail($invoice);
+        return view('layouts.nota', compact('model'));
     }
 }

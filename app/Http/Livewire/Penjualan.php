@@ -6,7 +6,7 @@ use App\Models\Product;
 use App\Models\ProductTransaction;
 use Livewire\Component;
 use App\Models\Transaction;
-use PDF;
+use Barryvdh\DomPDF\PDF;
 
 class Penjualan extends Component
 {
@@ -62,11 +62,9 @@ class Penjualan extends Component
         }
     }
 
-    public function nota($invoice_number){
-        $model = Transaction::with(['products.product'])->findOrFail($invoice_number);
-        $invoice = PDF::loadView('layouts.nota' , $model);
-        return $invoice->stream('nota.pdf');
-    }
+    // public function nota($invoice_number){
+    //     redirect()->route('cetak', ['invoice' => $invoice_number]);
+    // }
 
     public function view($invoice_number){
         $this->getInv($invoice_number);

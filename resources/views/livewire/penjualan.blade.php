@@ -44,7 +44,8 @@
                                     <button wire:click="destroy('{{$penjualan->invoice_number}}')" class="btn btn-danger btn-sm p-1">Delete</button>
                                     @else
                                     <button wire:click="view('{{$penjualan->invoice_number}}')" class="btn btn-info btn-sm p-1">View</button>
-                                    <button wire:click="nota('{{$penjualan->invoice_number}}')" class="btn btn-primary btn-sm p-1">Nota</button>
+                                    <a href="{{ route('cetak', ['invoice' => $penjualan->invoice_number]) }}" target="_blank" class="btn btn-primary btn-sm p-1">Nota</a>
+                                    {{-- <button onclick="nota('{{$penjualan->invoice_number}}')" class="btn btn-primary btn-sm p-1">Nota</button> --}}
                                     @endif
                                 </div>
                             </td>                                
@@ -84,7 +85,7 @@
                     <div>
                         <table class="table table-sm table-bordered table-hovered">
                             <thead class="bg-white">
-                                <tr >
+                                <tr>
                                     <th class="font-weight-bold">Nama</th>
                                     <th class="font-weight-bold">Harga</th>
                                     <th class="font-weight-bold" width="10px">Jumlah</th>
@@ -150,6 +151,14 @@
         </div>
     </div>
 </div>
+<script>
+    function nota(invoice_number){
+        var win = window.open('{{ route('cetak') }}/'+invoice_number, 'nota', 'width=20,height=20');
+        setTimeout(function() {
+            win.close();
+        }, 5000);
+    }
+</script>
 
 @push('script-custom')
     <script>
